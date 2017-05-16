@@ -1,18 +1,13 @@
 const express = require('express');
 const router  = express.Router();
+const index = require('./controllers/index.controller.js'); 
 
-router.get('/', (req, res) => {
-	res.render('home', {
-		title: 'Home',
-		route: 'http://localhost:3000/'
-	});
-});
+router.get('/', index.home);
 
-router.get('/:name', (req, res) => {
-	res.render('home', {
-		title: req.params.name,
-		route: `http://localhost:3000/${req.params.name}`
-	});
-});
+router.get('/login', index.login);
+router.post('/login', index.handleLogin);
+
+router.get('/signup', index.signup);
+router.post('/signup', index.handleSignUp);
 
 module.exports = router;
