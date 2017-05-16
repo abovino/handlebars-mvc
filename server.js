@@ -1,6 +1,6 @@
 const express       = require('express');
 const bodyParser    = require('body-parser');
-const session       = require('session');
+const session       = require('express-session');
 const exhbs         = require('express-handlebars');
 const sequelize     = require('sequelize');
 const passport      = require('passport');
@@ -13,6 +13,7 @@ const app = express();
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+app.use(express.static(path.join(__dirname, '/public')));
 
 app.engine('handlebars', exhbs({ defaultLayout: 'main' }));
 app.set('view engine', 'handlebars');
