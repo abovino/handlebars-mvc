@@ -6,7 +6,7 @@ const sequelize     = require('sequelize');
 const passport      = require('passport');
 const LocalStrategy = require('passport-local');
 const path          = require('path');
-const htmlRoutes    = require('./routes/htmlRoutes.js');
+const routes    = require('./routes/routes');
 
 const PORT = 3000; // Add env variable for port later
 const app = express();
@@ -18,7 +18,7 @@ app.use(express.static(path.join(__dirname, '/public')));
 app.engine('handlebars', exhbs({ defaultLayout: 'main' }));
 app.set('view engine', 'handlebars');
 
-app.use('/', htmlRoutes);
+app.use('/', routes);
 
 app.listen(PORT, () => {
 	console.log('Server listening on PORT 3000');
