@@ -29,12 +29,6 @@ module.exports = {
       dob: {
         type: Sequelize.DATEONLY
       },
-      city: {
-        type: Sequelize.STRING
-      },
-      state: {
-        type: Sequelize.STRING
-      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
