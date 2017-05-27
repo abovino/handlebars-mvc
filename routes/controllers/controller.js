@@ -4,11 +4,17 @@ module.exports = {
   },
 
   login: (req,res) => {
-    res.render('login');
+    var userNotFound = req.flash('userNotFound');
+    res.render('login', {
+      message: userNotFound[0]
+    });
   },
 
   signup: (req, res) => {
-    res.render('signup');
+    var pwFlash = req.flash('pwMessage');
+    res.render('signup', {
+      message: pwFlash[0]
+    });
   },
 
   // Custom middleware
@@ -28,7 +34,8 @@ module.exports = {
       if (req.body.password === req.body.confirmPassword) {
         return next();
       }
-      res.json("Passwords don't match");
+      req.flash('pwMessage', '*Please make sure your passwords match.*');
+      res.redirect('/signup');
     }
 
   }
