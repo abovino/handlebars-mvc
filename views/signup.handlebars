@@ -33,12 +33,14 @@
             </div>
           </div>
           <div class="row">
+            {{#if message}}
+              <div class="alert alert-danger" role="alert" style="max-width: 350px; margin: 0 auto; margin-bottom: 15px">
+                {{message}}
+              </div>
+            {{/if}}
             <button type="submit" class="btn btn-default">Submit</button>
           </div>
         </form>
-        {{#if message}}
-          <em style="color: red" >{{message}}</em>
-        {{/if}}
     </div>
   </div>
 </div>
