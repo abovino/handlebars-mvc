@@ -75,11 +75,11 @@ module.exports = function(passport) {
           }
 
           if (!user) {
-            return done(null, false);
+            return done(null, false, req.flash('userNotFound', '*Email not found!*'));
           }
 
           if (password != user.password) {
-            return done(null, false);
+            return done(null, false, req.flash('userNotFound', '*Invalid password!*'));
           }
 
           if (password == user.password) {
