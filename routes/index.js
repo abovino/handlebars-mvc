@@ -10,7 +10,7 @@ router.get('/', controller.home);
 router.get('/login', controller.login);
 router.post('/login', passport.authenticate('local-login', {
   successRedirect: '/auth/success',
-  failureRedirect: '/auth/fail'
+  failureRedirect: '/login'
 }));
 
 router.get('/signup', controller.signup);
