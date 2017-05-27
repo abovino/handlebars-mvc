@@ -34,7 +34,7 @@ module.exports = {
       if (req.body.password === req.body.confirmPassword) {
         return next();
       }
-      req.flash('pwMessage', '*Please make sure your passwords match.*');
+      req.flash('pwMessage', '*Passwords must match!*');
       res.redirect('/signup');
     }
 
