@@ -1,5 +1,6 @@
 const LocalStrategy = require('passport-local').Strategy;
-const models = require('./../models');
+const bcrypt        = require('bcrypt');
+const models        = require('./../models');
 
 module.exports = function(passport) {
   console.log('');
@@ -19,6 +20,12 @@ module.exports = function(passport) {
     passReqToCallback: true
   },
     function(req, username, password, done) {
+      bcrypt.hash(req.body.password, 10, function(err, hash) {
+        if (err)
+          console.log(err);
+        
+        console.log(hash);
+      });
       console.log('PASSPORT SIGN UP STRATEGY');
       process.nextTick(function() {
         models.User.findOne({
