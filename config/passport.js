@@ -20,12 +20,6 @@ module.exports = function(passport) {
     passReqToCallback: true
   },
     function(req, username, password, done) {
-      bcrypt.hash(req.body.password, 10, function(err, hash) {
-        if (err)
-          console.log(err);
-        
-        console.log(hash);
-      });
       console.log('PASSPORT SIGN UP STRATEGY');
       process.nextTick(function() {
         models.User.findOne({
@@ -41,17 +35,19 @@ module.exports = function(passport) {
           } 
         }).then(function(user) {
           if (!user) {
+            // Non async password hashing
+            var hashedPW = bcrypt.hashSync(req.body.password, 10);
             models.User.create({
               first_name: req.body.firstName,
               last_name: req.body.lastName,
               email: req.body.email,
               username: req.body.username,
-              password: req.body.password,
+              password: hashedPW,
               dob: req.body.dob
             }).then(function(user) {
               console.log("USER CREATED");
               console.log(user.dataValues);
-              return done(null, username)
+              return done(null, username);
             })
           } else {
             console.log("USER FOUND");
@@ -85,13 +81,15 @@ module.exports = function(passport) {
             return done(null, false, req.flash('userNotFound', '*Email not found!*'));
           }
 
-          if (password != user.password) {
-            return done(null, false, req.flash('userNotFound', '*Invalid password!*'));
-          }
-
-          if (password == user.password) {
+          console.log("Compare");
+          console.log(bcrypt.compareSync(password, user.password));
+          if (bcrypt.compareSync(password, user.password)) {
             console.log(user.dataValues);
             return done(null, user);
+          }
+
+          if (password != user.password) {
+            return done(null, false, req.flash('userNotFound', '*Invalid password!*'));
           }
         }).catch(err => {
           if (err) {
